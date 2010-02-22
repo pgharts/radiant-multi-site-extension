@@ -18,10 +18,6 @@ class MultiSiteExtension < Radiant::Extension
     end    
   end
 
-  extension_config do |config|
-    config.extension 'submenu'
-  end
-
   def activate
     # ActionController::Routing modules are required rather than sent as includes
     # because the routing persists between dev. requests and is not compatible
@@ -46,8 +42,14 @@ class MultiSiteExtension < Radiant::Extension
       Radiant::AdminUI.send :include, MultiSite::AdminUI 
       admin.site = Radiant::AdminUI.load_default_site_regions
     end
-
-    admin.tabs.add "Sites", "/admin/sites", :visibility => [:admin]
+    
+    if respond_to?(:tab)
+      tab("Content") do
+        add_item "Sites", "/admin/sites", :visibility => [:admin]
+      end
+    else
+      admin.tabs.add "Sites", "/admin/sites", :visibility => [:admin]
+    end
   end
 
   def deactivate

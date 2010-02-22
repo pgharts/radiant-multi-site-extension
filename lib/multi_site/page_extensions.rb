@@ -25,7 +25,7 @@ module MultiSite::PageExtensions
   
   module ClassMethods
     def homepage
-      if self.current_site.is_a?(Site)
+      if current_site.is_a?(Site)
         homepage = self.current_site.homepage
       end
       homepage ||= find_by_parent_id(nil)
