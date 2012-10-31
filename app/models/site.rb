@@ -5,6 +5,8 @@ class Site < ActiveRecord::Base
   acts_as_list
   belongs_to :created_by, :class_name => 'User'
   belongs_to :updated_by, :class_name => 'User'
+  belongs_to :production_homepage , :class_name => 'ProductionPage'
+
   default_scope :order => 'position ASC'
 
   class << self
@@ -66,7 +68,7 @@ class Site < ActiveRecord::Base
   
   def create_homepage
     if self.homepage_id.blank?
-      self.homepage = self.build_homepage(:title => "#{self.name} Homepage", 
+      self.homepage = self.build_homepage(:title => "#{self.name} Homepage",
                          :slug => "#{self.name.to_slug}", :breadcrumb => "Home")
       default_status = Radiant::Config['defaults.page.status']
       self.homepage.status = Status[default_status] if default_status

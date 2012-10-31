@@ -7,16 +7,6 @@ class MultiSiteExtension < Radiant::Extension
                  individual site) and allows model classes to be scoped by site. }
   url "http://radiantcms.org/"
 
-  define_routes do |map|
-    map.namespace :admin, :member => { :remove => :get } do |admin|
-      admin.resources :sites, :member => {
-        :move_higher => :post,
-        :move_lower => :post,
-        :move_to_top => :put,
-        :move_to_bottom => :put
-      }
-    end    
-  end
 
   def activate
     # ActionController::Routing modules are required rather than sent as includes
@@ -26,7 +16,7 @@ class MultiSiteExtension < Radiant::Extension
     require 'multi_site/route_set_extensions'
     
     # likewise for ScopedValidation, which is a pre-emptive hack that shouldn't run more than once.
-    require 'multi_site/scoped_validation'
+
 
     # Model extensions
     ActiveRecord::Base.send :include, MultiSite::ScopedModel
@@ -34,9 +24,17 @@ class MultiSiteExtension < Radiant::Extension
 
     # Controller extensions
     ApplicationController.send :include, MultiSite::ApplicationControllerExtensions
+    Admin::ResourceController.send :include, MultiSite::ApplicationControllerExtensions
+    #ActionController::Base.send :include, MultiSite::ApplicationControllerExtensions
     SiteController.send :include, MultiSite::SiteControllerExtensions
     Admin::ResourceController.send :include, MultiSite::ResourceControllerExtensions
     Admin::PagesController.send :include, MultiSite::PagesControllerExtensions
+    Admin::ResourceController.send :helper, MultiSite::SiteChooserHelper
+    Admin::PagesController.send :helper, MultiSite::SiteChooserHelper
+    admin.layouts.index.add(:top, "site_chooser")
+    admin.pages.index.add(:top, "admin/layouts/site_chooser")
+    admin.snippets.index.add(:top, "admin/layouts/site_chooser")
+
 
     unless defined? admin.site
       Radiant::AdminUI.send :include, MultiSite::AdminUI 
@@ -44,8 +42,8 @@ class MultiSiteExtension < Radiant::Extension
     end
     
     if respond_to?(:tab)
-      tab("Content") do
-        add_item "Sites", "/admin/sites", :visibility => [:admin]
+      tab("Settings") do
+        add_item "Sites", "/admin/sites", :after => "Extensions", :visibility => [:admin]
       end
     else
       admin.tabs.add "Sites", "/admin/sites", :visibility => [:admin]
@@ -57,4 +55,3 @@ class MultiSiteExtension < Radiant::Extension
 end
 
 class ActiveRecord::SiteNotFound < Exception; end
-
