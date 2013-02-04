@@ -16,6 +16,7 @@ module MultiSite::ApplicationControllerExtensions
 
 
   def set_site
+    Rails.logger.error("******SETTING SITE******")
     true if self.current_site = discover_current_site
   end
 
@@ -33,7 +34,6 @@ module MultiSite::ApplicationControllerExtensions
 
   def self.included(base)
     base.class_eval {
-      before_filter :set_site
       helper_method :current_site, :current_site=
     }
   end
