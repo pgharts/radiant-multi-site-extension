@@ -1,11 +1,11 @@
 require_dependency 'application_controller'
 
-class MultiSiteExtension < Radiant::Extension
-  version "0.8.1"
+class MultiSiteExtension < TrustyCms::Extension
+  version "1.0.0"
   description %{ Enables virtual sites to be created with associated domain names.
                  Also scopes the sitemap view to any given page (or the root of an
                  individual site) and allows model classes to be scoped by site. }
-  url "http://radiantcms.org/"
+  url "http://trustarts.org/"
 
 
   def activate
@@ -37,8 +37,8 @@ class MultiSiteExtension < Radiant::Extension
 
 
     unless defined? admin.site
-      Radiant::AdminUI.send :include, MultiSite::AdminUI 
-      admin.site = Radiant::AdminUI.load_default_site_regions
+      TrustyCms::AdminUI.send :include, MultiSite::AdminUI
+      admin.site = TrustyCms::AdminUI.load_default_site_regions
     end
     
     if respond_to?(:tab)

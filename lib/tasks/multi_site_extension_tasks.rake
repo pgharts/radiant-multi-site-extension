@@ -1,10 +1,10 @@
-namespace :radiant do
+namespace :trusty do
   namespace :extensions do
     namespace :multi_site do
       
       desc "Runs the migration of the Multi Site extension"
       task :migrate => :environment do
-        require 'radiant/extension_migrator'
+        require 'trusty_cms/extension_migrator'
         if ENV["VERSION"]
           MultiSiteExtension.migrator.migrate(ENV["VERSION"].to_i)
         else

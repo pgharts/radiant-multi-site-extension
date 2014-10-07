@@ -8,7 +8,7 @@ module MultiSite::ScopedValidation
       #
       #   validates_uniqueness_of :email, :scope => :site_id
       #
-      # but if you want to scope core radiant classes, you have a problem:
+      # but if you want to scope core trusty classes, you have a problem:
       # their uniqueness validations have already been declared
       # The only answer is to reach right back and change the validates_uniqueness_of method
       # and to make it more awkward, that has to happen so early that we can't reflect on the site association.

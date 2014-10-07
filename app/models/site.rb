@@ -62,7 +62,7 @@ class Site < ActiveRecord::Base
   # Returns the fully specified web address for the development version of this site and the supplied path, or the root of this site if no path is given.
     
   def dev_url(path = "/")
-    uri = URI.join("http://#{Radiant::Config['dev.host'] || 'dev'}.#{self.base_domain}", path)
+    uri = URI.join("http://#{TrustyCms::Config['dev.host'] || 'dev'}.#{self.base_domain}", path)
     uri.to_s
   end
   
@@ -70,11 +70,11 @@ class Site < ActiveRecord::Base
     if self.homepage_id.blank?
       self.homepage = self.build_homepage(:title => "#{self.name} Homepage",
                          :slug => "#{self.name.to_slug}", :breadcrumb => "Home")
-      default_status = Radiant::Config['defaults.page.status']
+      default_status = TrustyCms::Config['defaults.page.status']
       self.homepage.status = Status[default_status] if default_status
-      default_parts = Radiant::Config['defaults.page.parts'].to_s.strip.split(/\s*,\s*/)
+      default_parts = TrustyCms::Config['defaults.page.parts'].to_s.strip.split(/\s*,\s*/)
       default_parts.each do |name|
-        self.homepage.parts << PagePart.new(:name => name, :filter_id => Radiant::Config['defaults.page.filter'])
+        self.homepage.parts << PagePart.new(:name => name, :filter_id => TrustyCms::Config['defaults.page.filter'])
       end
       save
     end
