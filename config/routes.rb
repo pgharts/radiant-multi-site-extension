@@ -1,10 +1,12 @@
-ActionController::Routing::Routes.draw do |map|
-  map.namespace :admin, :member => { :remove => :get } do |admin|
-    admin.resources :sites, :member => {
-      :move_higher => :post,
-      :move_lower => :post,
-      :move_to_top => :put,
-      :move_to_bottom => :put
-    }
+TrustyCms::Application.routes.draw do
+  namespace :admin do
+    resources :sites do
+      get :remove, on: member
+      post :move_higher, on: member
+      post :move_lower, on: member
+      put :move_to_top, on: member
+      put :move_to_bottom, on: member
+    end
   end
 end
+
