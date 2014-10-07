@@ -25,4 +25,5 @@ Gem::Specification.new do |s|
   s.test_files    = Dir['test/**/*','spec/**/*','features/**/*'] - ignores
   # s.executables   = Dir['bin/*'] - ignores
   s.require_paths = ["lib"]
+  s.add_dependency "acts_as_list", "0.4.0"
 end
