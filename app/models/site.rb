@@ -81,6 +81,6 @@ class Site < ActiveRecord::Base
   end
 
   def reload_routes
-    ActionController::Routing::Routes.reload
+    TrustyCms::Application.reload_routes!
   end
 end

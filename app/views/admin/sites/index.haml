@@ -1,4 +1,4 @@
-- include_stylesheet('admin/multi_site')
+= stylesheet_link_tag 'admin/multi_site'
 = render_region :top 
 
 %h1 Sites
@@ -35,7 +35,7 @@
               = link_to image("remove.png", :alt => "Remove"), admin_site_path(site), :method => :delete, :confirm => "Are you sure you want to permanently remove #{site.name}?"
           - tbody.order_cell do
             %td.order
-              = order_links(site)
+              = order_links(site).html_safe
 
 - render_region :bottom do |bottom|
   - bottom.new_button do
