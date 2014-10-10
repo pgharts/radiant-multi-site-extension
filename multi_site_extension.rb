@@ -32,6 +32,16 @@ class MultiSiteExtension < TrustyCms::Extension
     admin.layouts.index.add(:top, "site_chooser")
     admin.pages.index.add(:top, "admin/layouts/site_chooser")
     admin.snippets.index.add(:top, "admin/layouts/site_chooser")
+    Layout.send :is_site_scoped
+    Snippet.send :is_site_scoped
+    User.send :is_site_scoped, :shareable => true
+    ApplicationHelper.send :include, ScopedHelper
+
+    unless admin.users.edit.form && admin.users.edit.form.include?('choose_site')
+      admin.users.edit.add :form, "choose_site", :after => "edit_roles"
+      admin.layouts.edit.add :form, "choose_site", :before => "edit_timestamp"
+      admin.snippets.edit.add :form, "choose_site", :before => "edit_filter" unless admin.snippets.edit.form.include?("choose_site")
+    end
 
 
     unless defined? admin.site

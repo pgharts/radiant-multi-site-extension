@@ -37,7 +37,7 @@ module MultiSite
 
         class << self
           attr_accessor :shareable
-          alias_method_chain :find_every, :site
+          alias_method_chain :all, :site
           %w{count average minimum maximum sum}.each do |getter|
             alias_method_chain getter.intern, :site
           end
@@ -48,10 +48,10 @@ module MultiSite
     end
 
     module ScopedClassMethods
-      def find_every_with_site(options)
-        return find_every_without_site(options) unless sites?
+      def all_with_site(options)
+        return all_without_site(options) unless sites?
         with_scope(:find => {:conditions => site_scope_condition}) do
-          find_every_without_site(options)
+          all_without_site(options)
         end
       end
 
@@ -68,18 +68,17 @@ module MultiSite
       # and should only be used in odd cases like migration.
       def find_without_site(*args)
         options = args.extract_options!
-        validate_find_options(options)
-        set_readonly_option!(options)
+        #set_readonly_option!(options)
 
         case args.first
           when :first then find_initial_without_site(options)     # defined here
-          when :all   then find_every_without_site(options)       # already defined by the alias chain
+          when :all   then all_without_site(options)       # already defined by the alias chain
         end
       end
       
       def find_initial_without_site(options)
         options.update(:limit => 1)
-        find_every_without_site(options).first
+        all_without_site(options).first
       end
       
       def sites?
