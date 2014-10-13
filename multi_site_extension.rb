@@ -23,6 +23,7 @@ class MultiSiteExtension < TrustyCms::Extension
     # Controller extensions
     ApplicationController.send :include, MultiSite::ApplicationControllerExtensions
     Admin::ResourceController.send :include, MultiSite::ApplicationControllerExtensions
+    ApplicationController.send :include, MultiSite::ApplicationControllerFilterExtensions
     #ActionController::Base.send :include, MultiSite::ApplicationControllerExtensions
     SiteController.send :include, MultiSite::SiteControllerExtensions
     Admin::ResourceController.send :include, MultiSite::ResourceControllerExtensions

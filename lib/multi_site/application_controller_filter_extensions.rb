@@ -3,7 +3,7 @@ module MultiSite::ApplicationControllerFilterExtensions
   def self.included(base)
     base.class_eval {
       prepend_before_filter :set_site
-      #alias_method_chain :authenticate, :site
+      alias_method_chain :authenticate, :site
     }
   end
 
