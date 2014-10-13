@@ -16,7 +16,6 @@ module MultiSite::ApplicationControllerExtensions
 
 
   def set_site
-    Rails.logger.error("******SETTING SITE******")
     true if self.current_site = discover_current_site
   end
 
