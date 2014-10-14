@@ -9,10 +9,10 @@ module MultiSite::PageExtensions
     }
     base.extend ClassMethods
     class << base
-      def find_by_url(url, live=true)
+      def find_by_path(path, live=true)
         root = homepage
         raise Page::MissingRootPageError unless root
-        root.find_by_url(url, live)
+        root.find_by_path(path, live)
       end
       def current_site
         @current_site ||= Site.default
