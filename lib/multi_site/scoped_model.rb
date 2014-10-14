@@ -39,6 +39,7 @@ module MultiSite
           attr_accessor :shareable
           alias_method_chain :all, :site
           alias_method_chain :where, :site
+          alias_method_chain :paginate, :site
           %w{count average minimum maximum sum}.each do |getter|
             alias_method_chain getter.intern, :site
           end
@@ -60,6 +61,13 @@ module MultiSite
         return where_without_site(options) unless sites?
         with_scope(:find => {:conditions => site_scope_condition}) do
           where_without_site(options)
+        end
+      end
+
+      def paginate_with_site(options={})
+        return paginate_without_site(options) unless sites?
+        with_scope(:find => {:conditions => site_scope_condition}) do
+          paginate_without_site(options)
         end
       end
 
