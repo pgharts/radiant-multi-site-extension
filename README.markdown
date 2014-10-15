@@ -23,8 +23,8 @@ There are no absolute requirements but you will need to install our submenu exte
 ### Installation ###
 
 	$ git submodule add git://github.com/spanner/radiant-multi-site-extension.git vendor/extensions/multi_site
-	$ rake radiant:extensions:multi_site:migrate
-	$ rake radiant:extensions:multi_site:update
+	$ rake trusty:extensions:multi_site:migrate
+	$ rake trusty:extensions:multi_site:update
 
 ### Compatibility ###
 
