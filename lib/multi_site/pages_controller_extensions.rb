@@ -5,10 +5,14 @@ module MultiSite::PagesControllerExtensions
       alias_method_chain :index, :site
       alias_method_chain :continue_url, :site
       alias_method_chain :remove, :back
-      responses.destroy.default do 
+      responses.destroy.default do
         return_url = session[:came_from]
         session[:came_from] = nil
-        redirect_to return_url || admin_pages_url(:root => model.root.id)
+        if model.class == Page
+          redirect_to return_url || admin_pages_url(:root => model.root.id)
+        else
+          redirect_to continue_url(params)
+        end
       end
     }
   end
