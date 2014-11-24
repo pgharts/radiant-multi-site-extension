@@ -23,5 +23,6 @@ Gem::Specification.new do |s|
   # s.executables   = Dir['bin/*'] - ignores
   s.require_paths = ["lib"]
   s.add_dependency "acts_as_list", "0.4.0"
-  s.add_dependency "trusty-snippets-extension"
+  s.add_dependency "trusty-snippets-extension", "~> 1.0.0"
+  s.add_dependency "trusty-cms",   "~> 1.0.1"
 end
