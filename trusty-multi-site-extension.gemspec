@@ -12,9 +12,6 @@ Gem::Specification.new do |s|
   s.email = %q{sipple@trustarts.org}
   s.homepage = %q{https://github.com/pgharts/trusty-multi-site-extension}
   s.summary = %q{Extends Trusty CMS Layouts to support multiple sites, defined by domain}
-  s.extra_rdoc_files = [
-      "README.md"
-  ]
 
   ignores = if File.exist?('.gitignore')
               File.read('.gitignore').split("\n").inject([]) {|a,p| a + Dir[p] }
