@@ -1,5 +1,5 @@
 # The site class includes - in find_for_host - some key retrieval and creation logic that is called from ApplicationController to set the current site context. 
-# Otherwise it's just another radiant data model.
+# Otherwise it's just another Trusty data model.
 
 class Site < ActiveRecord::Base
   acts_as_list

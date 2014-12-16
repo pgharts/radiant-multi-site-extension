@@ -2,7 +2,7 @@
 
 Created by Sean Cribbs, November 2007. Inspired by the original virtual_domain behavior.
 
-Multi Site allows you to host multiple websites on a single Radiant installation.
+Multi Site allows you to host multiple websites on a single TrustyCMS installation.
 
 ## (Forked) ##
 
@@ -30,7 +30,7 @@ There are no absolute requirements but you will need to install our submenu exte
 
 This differs from the original in that it will create a default site if none exists, but this should happen invisibly.
 
-This version of multi_site does cause failures in radiant's main tests, usually when a site is required but the tests don't supply it. I will probably add a 'lax mode' at some point that doesn't mind if no site is defined.
+This version of multi_site does cause failures in Trusty's main tests, usually when a site is required but the tests don't supply it. I will probably add a 'lax mode' at some point that doesn't mind if no site is defined.
 
 ### Scoped resources ###
 
@@ -48,7 +48,7 @@ If a site-scoped class includes any calls to `validates_uniqueness_of`, those to
 
 **Please Note:** a `site_scoped` class must be watched by the `UserActionObserver` in order to get the before_validation hook that sets the site id.
 
-There is, or will soon be, more about this [in the wiki](http://wiki.github.com/spanner/radiant-multi-site-extension) and one day I'll get round to posting some [proper documentation](http://spanner.org/radiant/multi_site).
+There is, or will soon be, more about this [in the wiki](https://github.com/pgharts/trusty-multi-site-extension) and one day I'll get round to posting some [proper documentation](http://spanner.org/radiant/multi_site).
 
 
 
@@ -57,7 +57,7 @@ There is, or will soon be, more about this [in the wiki](http://wiki.github.com/
 The [scoped_admin](http://github.com/spanner/radiant-scoped-admin-extension) extension uses this method to confine layouts, snippets and (some) 
 users to sites. It only takes four lines of code and two partials.
 
-We've also shrunk the [paperclipped_multi_site](http://github.com/spanner/radiant-paperclipped_multisite-extension) extension to a one-liner.
+We've also shrunk the [paperclipped_multi_site](https://github.com/pgharts/trusty-clipped-extension) extension to a one-liner.
 
 Our [reader](http://github.com/spanner/radiant-reader-extension) extension - which handles the mechanics of site membership - is site scoped if this extension is present. It includes a useful `fake_site_scope` class that drops a warning in the log if site-scoping is not possible but otherwise lets the extension work in a single-site installation.
 
