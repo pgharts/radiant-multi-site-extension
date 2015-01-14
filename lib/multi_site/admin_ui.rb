@@ -4,12 +4,11 @@
 module MultiSite::AdminUI
 
  def self.included(base)
-   base.class_eval do
+   base.class_eval {
 
       attr_accessor :site
       alias_method :sites, :site
-      
-      protected
+
 
         # The site-admin pages have these regions:
         
@@ -40,7 +39,7 @@ module MultiSite::AdminUI
           end
         end
       
-    end
+   }
   end
 end
 
