@@ -1,5 +1,7 @@
 # Multi Site #
 
+[![Gem Version](https://badge.fury.io/rb/trusty-multi-site-extension.svg)](http://badge.fury.io/rb/trusty-multi-site-extension)
+
 Created by Sean Cribbs, November 2007. Inspired by the original virtual_domain behavior.
 
 Multi Site allows you to host multiple websites on a single TrustyCMS installation.
