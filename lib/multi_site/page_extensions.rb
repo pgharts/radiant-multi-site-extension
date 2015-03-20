@@ -5,10 +5,16 @@ module MultiSite::PageExtensions
     base.class_eval {
       alias_method_chain :url, :sites
       mattr_accessor :current_site
-      has_one :site, :foreign_key => "homepage_id", :dependent => :nullify
+      belongs_to :site
+      before_create :associate_with_site
     }
     base.extend ClassMethods
     class << base
+
+      def associate_with_site
+        self.site_id = Page.current_site.site_id if self.site_id.nil?
+      end
+
       def find_by_path(path, live=true)
         root = homepage
         raise Page::MissingRootPageError unless root
@@ -24,6 +30,11 @@ module MultiSite::PageExtensions
   end
   
   module ClassMethods
+
+    def find_by_slug_for_site(slug)
+      self.where(slug: slug, site_id: Page.current_site.id)
+    end
+
     def homepage
       if current_site.is_a?(Site)
         homepage = self.current_site.homepage
