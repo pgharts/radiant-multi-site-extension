@@ -3,6 +3,7 @@
 module MultiSite::PageExtensions
   def self.included(base)
     base.class_eval {
+      include InstanceMethods
       alias_method_chain :url, :sites
       mattr_accessor :current_site
       belongs_to :site
@@ -10,10 +11,6 @@ module MultiSite::PageExtensions
     }
     base.extend ClassMethods
     class << base
-
-      def associate_with_site
-        self.site_id = Page.current_site.site_id if self.site_id.nil?
-      end
 
       def find_by_path(path, live=true)
         root = homepage
@@ -26,6 +23,12 @@ module MultiSite::PageExtensions
       def current_site=(site)
         @current_site = site
       end
+    end
+  end
+
+  module InstanceMethods
+    def associate_with_site
+      self.site_id = self.parent.site.id if self.site_id.nil?
     end
   end
   
