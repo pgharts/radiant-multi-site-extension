@@ -15,6 +15,7 @@ module MultiSite::PageExtensions
       def find_by_path(path, live=true)
         root = homepage
         raise Page::MissingRootPageError unless root
+        path = root.path if clean_path(path) == "/"
         root.find_by_path(path, live)
       end
       def current_site
@@ -22,6 +23,9 @@ module MultiSite::PageExtensions
       end
       def current_site=(site)
         @current_site = site
+      end
+      def clean_path(path)
+        "/#{ path.to_s.strip }/".gsub(%r{//+}, '/')
       end
     end
   end
