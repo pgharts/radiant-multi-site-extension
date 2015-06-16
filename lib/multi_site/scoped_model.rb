@@ -25,6 +25,7 @@ module MultiSite
         }.merge(options)
 
         class_eval <<-EO
+          default_scope {where(site_scope_condition)}
           extend MultiSite::ScopedModel::ScopedClassMethods
           include MultiSite::ScopedModel::ScopedInstanceMethods
         EO
@@ -37,8 +38,6 @@ module MultiSite
 
         class << self
           attr_accessor :shareable
-          alias_method_chain :all, :site
-          alias_method_chain :where, :site
           alias_method_chain :paginate, :site
           %w{count average minimum maximum sum}.each do |getter|
             alias_method_chain getter.intern, :site
@@ -50,23 +49,11 @@ module MultiSite
     end
 
     module ScopedClassMethods
-      def all_with_site(options = {})
-        return all_without_site(options) unless sites?
-        with_scope(:find => {:conditions => site_scope_condition}) do
-          all_without_site(options)
-        end
-      end
 
-      def where_with_site(options = {})
-        return where_without_site(options) unless sites?
-        with_scope(:find => {:conditions => site_scope_condition}) do
-          where_without_site(options)
-        end
-      end
 
       def paginate_with_site(options={})
         return paginate_without_site(options) unless sites?
-        with_scope(:find => {:conditions => site_scope_condition}) do
+        where(site_scope_condition) do
           paginate_without_site(options)
         end
       end
