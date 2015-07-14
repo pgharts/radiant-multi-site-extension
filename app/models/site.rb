@@ -7,7 +7,7 @@ class Site < ActiveRecord::Base
   belongs_to :updated_by, :class_name => 'User'
   belongs_to :production_homepage , :class_name => 'ProductionPage'
 
-  default_scope :order => 'position ASC'
+  default_scope {order('position ASC')}
 
   class << self
     attr_accessor :several
@@ -16,7 +16,7 @@ class Site < ActiveRecord::Base
     
     def find_for_host(hostname = '')
       return default if hostname.blank?
-      sites = all(:conditions => "domain IS NOT NULL and domain != ''")
+      sites = where("domain IS NOT NULL")
       site = sites.find { |site| hostname == site.base_domain || hostname =~ Regexp.compile(site.domain) }
       site || default
     end
