@@ -1,0 +1,96 @@
+#site_chooser{
+  width: 20%;
+  border-collapse: collapse;
+  float: right;
+}
+
+
+/* BE SURE TO INCLUDE THE CSS RESET FOUND IN THE DEMO PAGE'S CSS */
+/*------------------------------------*\
+	NAV
+\*------------------------------------*/
+#nav{
+  list-style:none;
+  font-weight:bold;
+  margin-bottom:10px;
+  /* Clear floats */
+  width:100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  margin: 0px;
+  cursor: pointer;
+  /* Bring the nav above everything else--uncomment if needed.
+  position:relative;
+  z-index:5;
+  */
+}
+#nav li{
+  margin-right:10px;
+  position:relative;
+  color: #66d9e0;
+}
+#nav a{
+  display:block;
+  padding:5px;
+  color:#fff;
+  background:#000;
+  text-decoration:none;
+}
+#nav a:hover{
+  color:#fff;
+  background:#000;
+  text-decoration:underline;
+}
+
+/*--- DROPDOWN ---*/
+
+#nav ul{
+  background:#fff; /* Adding a background makes the dropdown work properly in IE7+. Make this as close to your page's background as possible (i.e. white page == white background). */
+  background:rgba(255,255,255,0); /* But! Let's make the background fully transparent where we can, we don't actually want to see it if we can help it... */
+  list-style:none;
+  position:absolute;
+  /*left:-9999px;*/ /* Hide off-screen when not needed (this is more accessible than display:none;) */
+  margin-top:10px;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  -ms-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+
+}
+#nav ul li{
+  float:none;
+}
+#nav ul a{
+  white-space:nowrap; /* Stop text wrapping and creating multi-line dropdown items */
+}
+#nav:hover ul{ /* Display the dropdown on hover */
+  visibility: visible;
+  opacity: 1;
+  -webkit-transition: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  -ms-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+  /*left:0;*/ /* Bring back on-screen when needed */
+  z-index: 99999;
+
+}
+#nav li:hover a{ /* These create persistent hover states, meaning the top-most link stays 'hovered' even when your cursor has moved down the list. */
+  background:#000;
+  text-decoration:underline;
+}
+#nav li:hover ul a{ /* The persistent hover state does however create a global style for links even before they're hovered. Here we undo these effects. */
+  text-decoration:none;
+}
+#nav a.site-link:hover { /* Here we define the most explicit hover states--what happens when you hover each individual link. */
+  color: #66d9e0;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+}
