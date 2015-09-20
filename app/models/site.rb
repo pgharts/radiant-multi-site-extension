@@ -51,6 +51,7 @@ class Site < ActiveRecord::Base
   
   after_create :create_homepage
   after_save :reload_routes
+  attr_protected :created_at, :updated_at
   
   # Returns the fully specified web address for the supplied path, or the root of this site if no path is given.
   
