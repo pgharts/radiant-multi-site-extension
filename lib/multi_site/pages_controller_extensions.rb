@@ -8,8 +8,8 @@ module MultiSite::PagesControllerExtensions
       responses.destroy.default do
         return_url = session[:came_from]
         session[:came_from] = nil
-        if model.class == Page
-          redirect_to return_url || admin_pages_url(:root => model.root.id)
+        if model.class == Page or model.class < Page
+          redirect_to return_url || admin_pages_url(:site_id => model.site.id)
         else
           redirect_to continue_url(params)
         end
@@ -43,6 +43,6 @@ module MultiSite::PagesControllerExtensions
   end
   
   def continue_url_with_site(options={})
-    options[:redirect_to] || (params[:continue] ? edit_admin_page_url(model) : admin_pages_url(:root => model.root.id))
+    options[:redirect_to] || (params[:continue] ? edit_admin_page_url(model) : admin_pages_url(:site_id => model.site.id))
   end
 end
