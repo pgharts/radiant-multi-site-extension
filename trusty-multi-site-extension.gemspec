@@ -4,7 +4,7 @@ require "trusty-multi-site-extension"
 
 Gem::Specification.new do |s|
   s.name        = "trusty-multi-site-extension"
-  s.version = "2.0.5"
+  s.version = "2.0.6"
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sean Cribbs", "Eric Sipple", "Danielle Greaves"]
   s.description = %q{Extends Trusty CMS Layouts to support multiple sites, defined by domain}
