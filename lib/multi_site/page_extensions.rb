@@ -17,7 +17,15 @@ module MultiSite::PageExtensions
         raise Page::MissingRootPageError unless root
         path = root.path if clean_path(path) == "/"
         result = root.find_by_path(path, live)
-        result.is_a?(FileNotFoundPage) ? get_site_specific_file_not_found(result) : result
+
+        # If the result is a FileNotFoundPage that doesn't match the current
+        # site, try to find one that does.
+        if result.is_a?(FileNotFoundPage) && result.site_id != homepage.site_id
+          get_site_specific_file_not_found(result)
+        else
+          result
+        end
+
       end
       def current_site
         @current_site ||= Site.default
