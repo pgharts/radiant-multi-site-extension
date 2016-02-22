@@ -18,21 +18,17 @@ module MultiSite::PageExtensions
         path = root.path if clean_path(path) == "/"
         result = root.find_by_path(path, live)
 
-        # If it's a file not found page, see try adding the site homepage's
-        # slug to the path and see if there's
-        if result.is_a?(FileNotFoundPage)
-          result = root.find_by_path("#{root.slug}/#{path}", live)
-        end
-
-        # If the result is still a FileNotFoundPage and it
+        # If the result is a FileNotFoundPage and it
         # doesn't match the current site, try to find one that does.
         if result.is_a?(FileNotFoundPage) && result.site_id != homepage.site_id
           get_site_specific_file_not_found(result)
+
+        # Otherwise, just go with it.
         else
           result
         end
-
       end
+
       def current_site
         @current_site ||= Site.default
       end
