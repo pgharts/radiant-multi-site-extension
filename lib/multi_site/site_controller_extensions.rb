@@ -11,13 +11,18 @@ module MultiSite::SiteControllerExtensions
   def process_page_with_home_path(page)
     homepage = Page.current_site.homepage
     if page.is_a?(FileNotFoundPage) && !params[:url].include?(homepage.slug)
-      false if redirect_to "/#{homepage.slug}/#{params[:url]}"
+      # if we got the right 404 page, keep it!
+      if page.site_id != Page.current_site.id
+        false if redirect_to "/#{homepage.slug}/#{params[:url]}"
+      else
+        process_page_without_home_path(page)
+      end
     else
       process_page_without_home_path(page)
     end
 
   end
-  
+
   def set_site
     Page.current_site = Site.find_for_host(request.host)
     true
