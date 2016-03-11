@@ -1,7 +1,7 @@
 require_dependency 'application_controller'
 
 class MultiSiteExtension < TrustyCms::Extension
-  version "2.0.9"
+  version "2.0.10"
   description %{ Enables virtual sites to be created with associated domain names.
                  Also scopes the sitemap view to any given page (or the root of an
                  individual site) and allows model classes to be scoped by site. }
