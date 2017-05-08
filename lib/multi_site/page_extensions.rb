@@ -51,10 +51,11 @@ module MultiSite::PageExtensions
 
   module InstanceMethods
     def associate_with_site
+      binding.pry
       self.site_id = self.parent.site.id if self.site_id.nil?
     end
   end
-  
+
   module ClassMethods
 
     def find_by_slug_for_site(slug)
@@ -68,7 +69,7 @@ module MultiSite::PageExtensions
       homepage ||= find_by_parent_id(nil)
     end
   end
-  
+
   def url_with_sites
     if parent
       parent.child_url(self)
@@ -76,5 +77,5 @@ module MultiSite::PageExtensions
       "/"
     end
   end
-  
+
 end
