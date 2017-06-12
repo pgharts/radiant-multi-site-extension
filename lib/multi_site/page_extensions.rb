@@ -51,7 +51,6 @@ module MultiSite::PageExtensions
 
   module InstanceMethods
     def associate_with_site
-      binding.pry
       self.site_id = self.parent.site.id if self.site_id.nil?
     end
   end
