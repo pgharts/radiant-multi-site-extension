@@ -1,7 +1,7 @@
 require_dependency 'application_controller'
 
 class MultiSiteExtension < TrustyCms::Extension
-  version "3.0.0"
+  version "3.0.1"
   description %{ Enables virtual sites to be created with associated domain names.
                  Also scopes the sitemap view to any given page (or the root of an
                  individual site) and allows model classes to be scoped by site. }
@@ -11,7 +11,7 @@ class MultiSiteExtension < TrustyCms::Extension
   def activate
     # ActionController::Routing modules are required rather than sent as includes
     # because the routing persists between dev. requests and is not compatible
-    # with multiple alias_method_chain calls.
+    # with multiple alias_method calls.
 
     # likewise for ScopedValidation, which is a pre-emptive hack that shouldn't run more than once.
 

@@ -2,8 +2,9 @@ module MultiSite::ApplicationControllerFilterExtensions
 
   def self.included(base)
     base.class_eval {
-      prepend_before_filter :set_site
-      alias_method_chain :authenticate, :site
+      prepend_before_action :set_site
+      alias_method :authenticate_without_site, :authenticate
+      alias_method :authenticate, :authenticate_with_site
     }
   end
 

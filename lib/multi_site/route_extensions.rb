@@ -2,7 +2,8 @@ module MultiSite
   module RouteExtensions
 
     def self.included(base)
-      base.alias_method_chain(:recognition_conditions, :site)
+      base.alias_method :recognition_conditions_without_site, :recognition_conditions
+      base.alias_method :recognition_conditions, :recognition_conditions_with_site
     end
 
     def recognition_conditions_with_site

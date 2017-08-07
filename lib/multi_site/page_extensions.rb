@@ -4,7 +4,8 @@ module MultiSite::PageExtensions
   def self.included(base)
     base.class_eval {
       include InstanceMethods
-      alias_method_chain :url, :sites
+      alias_method :url_without_sites, :url
+      alias_method :url, :url_with_sites
       mattr_accessor :current_site
       belongs_to :site
       before_create :associate_with_site
