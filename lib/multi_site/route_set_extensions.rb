@@ -2,7 +2,8 @@ module MultiSite
   module RouteSetExtensions
 
     def self.included(base)
-      base.alias_method_chain :extract_request_environment, :site
+      base.alias_method :extract_request_environment_without_site, :extract_request_environment
+      base.alias_method :extract_request_environment, :extract_request_environment_with_site
     end
 
     def extract_request_environment_with_site(request)

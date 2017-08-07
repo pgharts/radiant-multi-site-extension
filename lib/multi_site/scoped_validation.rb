@@ -3,7 +3,7 @@ module MultiSite::ScopedValidation
   def self.included(base)
 
     base.class_eval do
-      # scoping validations to the site should be very simple 
+      # scoping validations to the site should be very simple
       # all you would normally need is something like this:
       #
       #   validates_uniqueness_of :email, :scope => :site_id
@@ -23,9 +23,10 @@ module MultiSite::ScopedValidation
         validates_uniqueness_of_without_site(*attr)
       end
 
-      alias_method_chain :validates_uniqueness_of, :site
+      alias_method :validates_uniqueness_of_without_site, :validates_uniqueness_of
+      alias_method :validates_uniqueness_of, :validates_uniqueness_of_with_site
     end
-    
+
   end
 end
 

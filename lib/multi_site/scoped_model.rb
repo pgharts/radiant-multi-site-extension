@@ -1,25 +1,25 @@
 module MultiSite
-  
+
   module ScopedModel
     def self.included(base)
       base.extend ClassMethods
     end
-  
+
     module ClassMethods
       def is_site_scoped?
         false
       end
-      
+
       # only option at the moment is :shareable, which we take to mean that sites are optional:
       # if true it causes us not to set the site automatically or to validate its presence,
-      # and to extend the scoping conditions so that objects with no site are returned as 
+      # and to extend the scoping conditions so that objects with no site are returned as
       # well as objects with the specified site
       # that is, anything without a site is considered to be shared among all sites
       # the default is false
-      
+
       def is_site_scoped(options={})
         return if is_site_scoped?
-        
+
         options = {
           :shareable => false
         }.merge(options)
@@ -29,7 +29,7 @@ module MultiSite
           extend MultiSite::ScopedModel::ScopedClassMethods
           include MultiSite::ScopedModel::ScopedInstanceMethods
         EO
-        
+
         belongs_to :site
         Site.send(:has_many, plural_symbol_for_class)
 
@@ -38,12 +38,14 @@ module MultiSite
 
         class << self
           attr_accessor :shareable
-          alias_method_chain :paginate, :site
+          alias_method :paginate_without_site, :paginate
+          alias_method :paginate, :paginate_with_site
           %w{count average minimum maximum sum}.each do |getter|
-            alias_method_chain getter.intern, :site
+            alias_method "#{getter}_without_site".intern, getter.intern
+            alias_method getter.intern, "#{getter}_with_site".intern
           end
         end
-        
+
         self.shareable = options[:shareable]
       end
     end
@@ -66,7 +68,7 @@ module MultiSite
           end
         end
       end
-      
+
       # this only works with :all and :first
       # and should only be used in odd cases like migration.
       def find_without_site(*args)
@@ -78,12 +80,12 @@ module MultiSite
           when :all   then all_without_site(options)       # already defined by the alias chain
         end
       end
-      
+
       def find_initial_without_site(options)
         options.update(:limit => 1)
         all_without_site(options).first
       end
-      
+
       def sites?
         Site.table_exists? && Site.several?
       end
@@ -96,22 +98,22 @@ module MultiSite
       def current_site
         Page.current_site
       end
-            
+
       def site_scope_condition
         if self.shareable
           condition = ""
           condition << "#{self.table_name}.site_id = #{self.current_site.id} OR " if self.current_site
-          condition << "#{self.table_name}.site_id IS NULL" 
+          condition << "#{self.table_name}.site_id IS NULL"
         else
           condition = "#{self.table_name}.site_id = #{self.current_site!.id}"
         end
         condition
       end
-    
+
       def plural_symbol_for_class
         self.to_s.pluralize.underscore.intern
       end
-      
+
       def is_site_scoped?
         true
       end
@@ -120,7 +122,7 @@ module MultiSite
         !!self.shareable
       end
     end
-  
+
     module ScopedInstanceMethods
       protected
         def set_site
@@ -129,4 +131,3 @@ module MultiSite
     end
   end
 end
-

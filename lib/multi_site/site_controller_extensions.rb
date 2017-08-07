@@ -1,8 +1,9 @@
 module MultiSite::SiteControllerExtensions
   def self.included(base)
     base.class_eval do
-      before_filter :set_site
-      alias_method_chain :process_page, :home_path
+      before_action :set_site
+      alias_method :process_page_without_home_path, :process_page
+      alias_method :process_page, :process_page_with_home_path
     end
   end
 
