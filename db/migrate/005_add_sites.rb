@@ -1,4 +1,4 @@
-class AddSites < ActiveRecord::Migration
+class AddSites < ActiveRecord::Migration[5.1]
   def self.up
     [:layouts, :snippets, :users].each do |table|
       add_column table, :site_id, :integer
