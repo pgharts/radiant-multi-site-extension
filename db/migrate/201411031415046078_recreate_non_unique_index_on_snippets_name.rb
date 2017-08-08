@@ -1,4 +1,4 @@
-class RecreateNonUniqueIndexOnSnippetsName < ActiveRecord::Migration
+class RecreateNonUniqueIndexOnSnippetsName < ActiveRecord::Migration[5.1]
   def self.up
     remove_index :snippets, :name => "name"
     add_index :snippets, [:name, :site_id ], :name => "name_site_id", :unique => true

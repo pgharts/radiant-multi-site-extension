@@ -12,15 +12,12 @@ gem 'trustygems', '~> 0.2.0'
 gemspec
 
 group :development, :test do
-  gem 'thin',             '~> 1.6.2'
   gem 'pry',              '~> 0.10.0'
   gem 'capybara',         '~> 2.14.0'
   gem 'rspec-rails'
   gem 'launchy',          '~> 2.4.2'
   gem 'database_cleaner', '~> 1.3.0'
   gem 'poltergeist',      '~> 1.5.1'
-  gem 'factory_girl_rails', '~> 4.5.0'
-  gem 'rails-observers', :git => 'https://github.com/rails/rails-observers'
-  gem 'protected_attributes_continued'
+  gem 'factory_girl_rails'
   gem "pry-byebug"
 end
